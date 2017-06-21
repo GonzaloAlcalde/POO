@@ -15,9 +15,17 @@ import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 import java.awt.Canvas;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import java.awt.Dimension;
 
 public class VentanaInicio extends JFrame {
 
+	private VentanaInicio home = this;
+	
 	private JPanel contentPane;
 
 	/**
@@ -40,6 +48,8 @@ public class VentanaInicio extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaInicio() {
+		
+		
 		setTitle("P\u00E9rez Hnos. - Bienvenido");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -64,9 +74,22 @@ public class VentanaInicio extends JFrame {
 		panelSeleccion.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JButton btnAdministracion = new JButton("Administraci\u00F3n\r\n");
+		btnAdministracion.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				VentanaAdministracion t = new VentanaAdministracion(home);
+				t.setVisible(true);
+			}
+		});
 		panelSeleccion.add(btnAdministracion);
 		
 		JButton btnOficinaTecnica = new JButton("Oficina T\u00E9cnica");
+		btnOficinaTecnica.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+		});
 		panelSeleccion.add(btnOficinaTecnica);
 		
 		JButton btnProduccion = new JButton("Producci\u00F3n");
