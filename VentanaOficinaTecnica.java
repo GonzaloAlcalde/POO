@@ -29,9 +29,10 @@ public class VentanaOficinaTecnica extends JFrame {
 		setTitle("P\u00E9rez Hnos. - Oficina T\u00E9cnica");
 		
 		home = inicio;
+		home.setVisible(false);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 408, 324);
+		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -53,7 +54,7 @@ public class VentanaOficinaTecnica extends JFrame {
 				return columnEditables[column];
 			}
 		});
-		contentPane.add(table, BorderLayout.WEST);
+		contentPane.add(table, BorderLayout.CENTER);
 		
 		panel = new JPanel();
 		contentPane.add(panel, BorderLayout.EAST);
@@ -76,4 +77,3 @@ public class VentanaOficinaTecnica extends JFrame {
 	}
 
 }
-
