@@ -30,7 +30,7 @@ public class VentanaAdministracion extends JFrame {
 		
 		setTitle("P\u00E9rez Hnos. - Administraci\u00F3n");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 600, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -39,20 +39,20 @@ public class VentanaAdministracion extends JFrame {
 		tablaPedidos = new JTable();
 		tablaPedidos.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"Cliente", "Detalles", "Fecha"},
+				{"Cliente", "Detalles", "Fecha", "Sector", "Comentarios"},
 			},
 			new String[] {
-				"Cliente", "Detalles", "Fecha"
+				"Cliente", "Detalles", "Fecha", "Sector", "Comentarios"
 			}
 		) {
 			Class[] columnTypes = new Class[] {
-				Object.class, String.class, Object.class
+				Object.class, String.class, Object.class, Object.class, Object.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 			boolean[] columnEditables = new boolean[] {
-				false, false, false
+				true, true, true, false, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
