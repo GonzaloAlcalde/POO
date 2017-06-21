@@ -45,7 +45,15 @@ public class VentanaProduccion extends JFrame {
 			new String[] {
 				"Cliente", "Detalle", "Fecha", "Maquina", "Comentarios"
 			}
-		));
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		
 		contentPane.add(table, BorderLayout.CENTER);
 		
 		panel = new JPanel();
@@ -66,3 +74,4 @@ public class VentanaProduccion extends JFrame {
 	}
 
 }
+
