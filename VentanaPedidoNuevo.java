@@ -70,6 +70,7 @@ public class VentanaPedidoNuevo extends JDialog {
 						VentanaBuscarCliente v= new VentanaBuscarCliente();
 						v.setModal(true);
 						v.setVisible(true);
+						textField.setText(v.getResultado());
 					}
 				});
 				panel.add(btnBuscar);
