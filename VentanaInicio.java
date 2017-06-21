@@ -20,7 +20,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import java.awt.Dimension;
 
 public class VentanaInicio extends JFrame {
 
@@ -87,15 +86,30 @@ public class VentanaInicio extends JFrame {
 		btnOficinaTecnica.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				VentanaOficinaTecnica t = new VentanaOficinaTecnica(home);
+				t.setVisible(true);
 			}
 		});
 		panelSeleccion.add(btnOficinaTecnica);
 		
 		JButton btnProduccion = new JButton("Producci\u00F3n");
+		btnProduccion.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				VentanaProduccion t = new VentanaProduccion(home);
+				t.setVisible(true);
+			}
+		});
 		panelSeleccion.add(btnProduccion);
 		
 		JButton btnDespacho = new JButton("Despacho\r\n");
+		btnDespacho.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				VentanaDespacho t = new VentanaDespacho(home);
+				t.setVisible(true);
+			}
+		});
 		panelSeleccion.add(btnDespacho);
 		
 		JPanel panelCentral = new JPanel();
