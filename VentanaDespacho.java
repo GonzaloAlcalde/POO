@@ -7,6 +7,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -23,6 +27,8 @@ public class VentanaDespacho extends JFrame {
 		setTitle("P\u00E9rez Hnos. - Despacho");
 		
 		home = inicio;
+		home.setVisible(false);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -33,7 +39,7 @@ public class VentanaDespacho extends JFrame {
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
 		
-		table = new JTable();
+		JTable table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 				{"Cliente", "Detalles", "Fecha", "Comentarios"},
@@ -67,3 +73,4 @@ public class VentanaDespacho extends JFrame {
 		});
 		panel_1.add(btnVolver, BorderLayout.SOUTH);
 	}
+}
