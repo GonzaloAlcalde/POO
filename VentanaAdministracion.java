@@ -14,29 +14,20 @@ import java.awt.event.ActionEvent;
 
 public class VentanaAdministracion extends JFrame {
 
+	private VentanaInicio home;
+	
 	private JPanel contentPane;
 	private JTable tablaPedidos;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaAdministracion frame = new VentanaAdministracion();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
-	public VentanaAdministracion() {
+	public VentanaAdministracion(VentanaInicio inicio) {
+		
+		home = inicio;
+		
+		home.setVisible(false);
+		
 		setTitle("Administraci\u00F3n");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -79,6 +70,7 @@ public class VentanaAdministracion extends JFrame {
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				home.setVisible(true);
 				setVisible(false);
 			}
 		});
