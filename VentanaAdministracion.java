@@ -60,11 +60,20 @@ public class VentanaAdministracion extends JFrame {
 		});
 		contentPane.add(tablaPedidos, BorderLayout.CENTER);
 		
+		
 		JPanel panelBotonesPedidos = new JPanel();
 		contentPane.add(panelBotonesPedidos, BorderLayout.EAST);
 		panelBotonesPedidos.setLayout(new BorderLayout(0, 0));
 		
 		JButton btnNuevoPedido = new JButton("Nuevo Pedido");
+		btnNuevoPedido.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//SE CREA LA VENTANA PEDIDO
+				VentanaPedidoNuevo v= new VentanaPedidoNuevo();
+				v.setModal(true);
+				v.setVisible(true);
+			}
+		});
 		panelBotonesPedidos.add(btnNuevoPedido, BorderLayout.NORTH);
 		
 		JButton btnVolver = new JButton("Volver");
