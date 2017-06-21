@@ -23,23 +23,47 @@ public class VentanaDespacho extends JFrame {
 		setTitle("P\u00E9rez Hnos. - Despacho");
 		
 		home = inicio;
-		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		JButton btnVolver = new JButton("Volver");
-		btnVolver.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				home.setVisible(true);
-				setVisible(false);
+		JPanel panel = new JPanel();
+		contentPane.add(panel, BorderLayout.CENTER);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{"Cliente", "Detalles", "Fecha", "Comentarios"},
+			},
+			new String[] {
+				"Cliente", "Detalles", "Fecha", "Comentarios"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
 			}
 		});
-		contentPane.add(btnVolver, BorderLayout.CENTER);
+		panel.add(table);
+		
+		JPanel panel_1 = new JPanel();
+		contentPane.add(panel_1, BorderLayout.EAST);
+		panel_1.setLayout(new BorderLayout(0, 0));
+		
+		JButton btnNewButton = new JButton("Despachar");
+		panel_1.add(btnNewButton, BorderLayout.NORTH);
+		
+		JButton btnVolver = new JButton("Volver");
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
+				home.setVisible(true);
+			}
+		});
+		panel_1.add(btnVolver, BorderLayout.SOUTH);
 	}
-
-}
