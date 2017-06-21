@@ -1,5 +1,7 @@
 package sistemaPerezHnos;
 
+import javax.swing.table.DefaultTableModel;
+
 public class Cliente {
 	private String razonSocial;
 	private String CUIT;
@@ -40,5 +42,16 @@ public class Cliente {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public static DefaultTableModel buscar(String texto){
+		DefaultTableModel modelo;
+		
+		String tabla = "cliente";
+		String campos[] = {"idCliente", "razon_social", "cuit", "telefono", "direccion", "email"};
+		String busqueda = texto;
+		
+		modelo = PruebaConexion.ejecutarConsulta(tabla, campos, busqueda);
+		
+		return modelo;
 	}
 }
