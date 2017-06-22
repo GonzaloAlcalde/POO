@@ -1,5 +1,4 @@
 package sistemaPerezHnos;
-
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -11,22 +10,20 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-public class VentanaProduccion extends JFrame {
-
+public class VentanaDespacho extends JFrame {
+	
 	private VentanaInicio home;
 
 	private JPanel contentPane;
-	private JTable table;
-	private JPanel panel;
-	private JButton btnAsignarMaquina;
 
 	/**
 	 * Create the frame.
 	 */
-	public VentanaProduccion(VentanaInicio inicio) {
-		setTitle("P\u00E9rez Hnos. - Producci\u00F3n");
+	public VentanaDespacho(VentanaInicio inicio) {
+		setTitle("P\u00E9rez Hnos. - Despacho");
 		
 		home = inicio;
 		home.setVisible(false);
@@ -38,40 +35,41 @@ public class VentanaProduccion extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		table = new JTable();
+		JPanel panel = new JPanel();
+		contentPane.add(panel, BorderLayout.CENTER);
+		
+		JTable table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"Cliente", "Detalle", "Fecha", "Maquina", "Comentarios"},
+				{"Cliente", "Detalles", "Fecha", "Comentarios"},
 			},
 			new String[] {
-				"Cliente", "Detalle", "Fecha", "Maquina", "Comentarios"
+				"Cliente", "Detalles", "Fecha", "Comentarios"
 			}
 		) {
 			boolean[] columnEditables = new boolean[] {
-				false, false, false, false, false
+				false, false, false, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
 		});
+		panel.add(table);
 		
-		contentPane.add(table, BorderLayout.CENTER);
+		JPanel panel_1 = new JPanel();
+		contentPane.add(panel_1, BorderLayout.EAST);
+		panel_1.setLayout(new BorderLayout(0, 0));
 		
-		panel = new JPanel();
-		contentPane.add(panel, BorderLayout.EAST);
-		panel.setLayout(new BorderLayout(0, 0));
+		JButton btnNewButton = new JButton("Despachar");
+		panel_1.add(btnNewButton, BorderLayout.NORTH);
 		
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				home.setVisible(true);
 				setVisible(false);
+				home.setVisible(true);
 			}
 		});
-		
-		panel.add(btnVolver, BorderLayout.SOUTH);
-		
-		
+		panel_1.add(btnVolver, BorderLayout.SOUTH);
 	}
-
 }

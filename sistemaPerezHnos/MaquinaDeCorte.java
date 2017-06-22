@@ -1,5 +1,4 @@
 package sistemaPerezHnos;
-
 public enum MaquinaDeCorte {
 	OXIGENO1,
 	OXIGENO2,

@@ -1,5 +1,4 @@
 package sistemaPerezHnos;
-
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -13,7 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.GridLayout;
 
-public class VentanaOficinaTecnica extends JFrame {
+public class VentanaProduccion extends JFrame {
 
 	private VentanaInicio home;
 
@@ -25,14 +24,14 @@ public class VentanaOficinaTecnica extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaOficinaTecnica(VentanaInicio inicio) {
-		setTitle("P\u00E9rez Hnos. - Oficina T\u00E9cnica");
+	public VentanaProduccion(VentanaInicio inicio) {
+		setTitle("P\u00E9rez Hnos. - Producci\u00F3n");
 		
 		home = inicio;
 		home.setVisible(false);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 553, 325);
+		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -54,14 +53,12 @@ public class VentanaOficinaTecnica extends JFrame {
 				return columnEditables[column];
 			}
 		});
+		
 		contentPane.add(table, BorderLayout.CENTER);
 		
 		panel = new JPanel();
 		contentPane.add(panel, BorderLayout.EAST);
 		panel.setLayout(new BorderLayout(0, 0));
-		
-		btnAsignarMaquina = new JButton("Asignar Maquina");
-		panel.add(btnAsignarMaquina, BorderLayout.NORTH);
 		
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {
