@@ -1,4 +1,5 @@
 package sistemaPerezHnos;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -23,12 +24,16 @@ public class VentanaBuscarCliente extends JDialog {
 	private JTextField txtBuscar;
 	private JTable tabla;
 	
-	private String resultado;
+	private String razon_social;
+	private int idCliente;
 	
-	public String getResultado(){
-		return resultado;
+	public String getRazon_Social(){
+		return razon_social;
 	}
 	
+	public int getIdCliente(){
+		return idCliente;
+	}
 
 	/**
 	 * Launch the application.
@@ -121,7 +126,8 @@ public class VentanaBuscarCliente extends JDialog {
 		//int column = tabla.getSelectedColumn();
 		
 		DefaultTableModel modelo = (DefaultTableModel)tabla.getModel();
-		this.resultado = (String)modelo.getValueAt(row, 1);
+		this.razon_social = (String)modelo.getValueAt(row, 1);
+		this.idCliente = (int)modelo.getValueAt(row, 0);
 		
 		setVisible(false);
 	}
