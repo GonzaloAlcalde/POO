@@ -1,4 +1,5 @@
 package sistemaPerezHnos;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -15,12 +16,19 @@ import javax.swing.JComboBox;
 import java.awt.GridLayout;
 import javax.swing.SwingConstants;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class VentanaPedidoNuevo extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
+	private int idCliente;
 
 	/**
 	 * Launch the application.
@@ -69,7 +77,8 @@ public class VentanaPedidoNuevo extends JDialog {
 						VentanaBuscarCliente v= new VentanaBuscarCliente();
 						v.setModal(true);
 						v.setVisible(true);
-						textField.setText(v.getResultado());
+						textField.setText(v.getRazon_Social());
+						idCliente = v.getIdCliente();
 					}
 				});
 				panel.add(btnBuscar);
@@ -111,6 +120,13 @@ public class VentanaPedidoNuevo extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("OK");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						crearPedido();
+						setVisible(false);
+					}
+				});
+				
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
@@ -128,4 +144,25 @@ public class VentanaPedidoNuevo extends JDialog {
 		}
 	}
 
+	private void crearPedido(){
+		try {
+			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/TP_Objetos", "root", "1234");
+			
+			String detalle = textField_1.getText();
+			String fecha = "NOW()";
+			
+			//"insert into cliente (codigo, razon_social, CUIT, telefonos) VALUES (1, 'Perex S.A.', '2344455544', '0303456 (preguntar por pipo)');"
+		
+			String sql = "insert into pedidos (idCliente, detalles, fecha) VALUES ("+ idCliente +", '"+ detalle +"', "+ fecha +");";
+			
+			Statement st1 = conexion.createStatement();
+			st1.executeUpdate(sql);
+			
+			st1.close();
+			conexion.close();
+					
+		} catch (SQLException s){
+			s.printStackTrace();
+		}
+	}
 }
