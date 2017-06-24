@@ -1,4 +1,5 @@
 package sistemaPerezHnos;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -9,6 +10,11 @@ import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class VentanaAdministracion extends JFrame {
@@ -36,7 +42,68 @@ public class VentanaAdministracion extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		tablaPedidos = new JTable();
-		tablaPedidos.setModel(new DefaultTableModel(
+		DefaultTableModel modelo = new DefaultTableModel(){
+			 @Override
+		    public boolean isCellEditable(int row, int column) {
+		       //all cells false
+		       return false;
+		    }
+		};
+		modelo.addColumn("idPedido");
+		modelo.addColumn("idCliente");
+		modelo.addColumn("Detalles");
+		//modelo.addColumn("Fecha");
+		modelo.addColumn("Sector");
+		modelo.addColumn("Comentarios");
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		} catch (ClassNotFoundException | IllegalAccessException | InstantiationException e){
+			e.printStackTrace();
+		}
+		
+		try {
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost/TP_Objetos", "root", "1234");
+
+			String campos[] = {"idPedido", "idCliente", "detalles", "sector", "comentarios"};
+			String cadenaCampos = "";
+			String coma = ""; 
+			for (String c : campos){
+				cadenaCampos += coma + c;
+				coma = ",";
+			}
+			
+			//SELECT codigo, razon_social FROM cliente WHERE razon_social LIKE '%perez%';
+			String sql = "SELECT " + cadenaCampos + " FROM " + "pedidos;";
+			PreparedStatement ps = con.prepareStatement(sql);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			Object registro[] = new Object[5];
+			
+			while (rs.next()){
+				
+				registro[0] = rs.getObject("idPedido");
+				registro[1] = rs.getObject("idCliente");
+				registro[2] = rs.getObject("detalles");
+				//registro[3] = rs.getObject("fecha");
+				registro[3] = rs.getObject("sector");
+				registro[4] = rs.getObject("comentarios");
+				
+				modelo.addRow(registro);
+			}
+			
+			rs.close();
+			ps.close();
+			con.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		tablaPedidos.setModel(modelo);
+/*		tablaPedidos.setModel(new DefaultTableModel(
 			new Object[][] {
 				{"Cliente", "Detalles", "Fecha", "Sector", "Comentarios"},
 			},
@@ -56,7 +123,7 @@ public class VentanaAdministracion extends JFrame {
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
-		});
+		}); */
 		contentPane.add(tablaPedidos, BorderLayout.CENTER);
 		
 		
