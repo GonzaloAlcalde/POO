@@ -43,7 +43,7 @@ public class VentanaAdministracion extends JFrame {
 				coma = ",";
 			}
 			
-			String sql = "SELECT " + cadenaCampos + " FROM " + "pedidos;";
+			String sql = "SELECT " + cadenaCampos + " FROM " + "pedidos ORDER BY fecha;";
 			PreparedStatement ps = con.prepareStatement(sql);
 			
 			ResultSet rs = ps.executeQuery();
@@ -136,12 +136,13 @@ public class VentanaAdministracion extends JFrame {
 		panelBotonesPedidos.add(btnVolver, BorderLayout.SOUTH);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		contentPane.add(scrollPane, BorderLayout.WEST);
+		
+		contentPane.add(scrollPane, BorderLayout.CENTER);
 		
 		tablaPedidos = new JTable();
 		
 		tablaPedidos.setModel(modelo);
-		contentPane.add(tablaPedidos, BorderLayout.CENTER);
+		scrollPane.setViewportView(tablaPedidos);
 	}
 
 }

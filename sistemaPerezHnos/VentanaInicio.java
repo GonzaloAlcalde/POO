@@ -38,36 +38,34 @@ public class VentanaInicio extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public VentanaInicio() {
 		
 		
 		setTitle("P\u00E9rez Hnos. - Bienvenido");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JLabel lblPerezHermanos = new JLabel("\r\nP\u00E9rez Hermanos SA");
-		lblPerezHermanos.setFont(new Font("Calibri", Font.BOLD, 20));
+		lblPerezHermanos.setFont(new Font("Calibri", Font.BOLD, 40));
 		lblPerezHermanos.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblPerezHermanos, BorderLayout.NORTH);
+		contentPane.add(lblPerezHermanos);
 		
-		JLabel lblDibujo = new JLabel("DIBUJO");
-		contentPane.add(lblDibujo, BorderLayout.WEST);
-		
-		JLabel lblDibujo_1 = new JLabel("DIBUJO");
-		contentPane.add(lblDibujo_1, BorderLayout.EAST);
+//		JLabel lblDibujo = new JLabel("DIBUJO");
+//		contentPane.add(lblDibujo, BorderLayout.WEST);
+//		
+//		JLabel lblDibujo_1 = new JLabel("DIBUJO");
+//		contentPane.add(lblDibujo_1, BorderLayout.EAST);
 		
 		JPanel panelSeleccion = new JPanel();
-		contentPane.add(panelSeleccion, BorderLayout.SOUTH);
-		panelSeleccion.setLayout(new GridLayout(1, 0, 0, 0));
+		contentPane.add(panelSeleccion);
+		panelSeleccion.setLayout(new GridLayout(2, 2));
 		
 		JButton btnAdministracion = new JButton("Administraci\u00F3n\r\n");
+		btnAdministracion.setFont(new Font("Calibri", Font.PLAIN, 20));
 		btnAdministracion.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -78,6 +76,7 @@ public class VentanaInicio extends JFrame {
 		panelSeleccion.add(btnAdministracion);
 		
 		JButton btnOficinaTecnica = new JButton("Oficina T\u00E9cnica");
+		btnOficinaTecnica.setFont(new Font("Calibri", Font.PLAIN, 20));
 		btnOficinaTecnica.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -88,6 +87,7 @@ public class VentanaInicio extends JFrame {
 		panelSeleccion.add(btnOficinaTecnica);
 		
 		JButton btnProduccion = new JButton("Producci\u00F3n");
+		btnProduccion.setFont(new Font("Calibri", Font.PLAIN, 20));
 		btnProduccion.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -98,6 +98,7 @@ public class VentanaInicio extends JFrame {
 		panelSeleccion.add(btnProduccion);
 		
 		JButton btnDespacho = new JButton("Despacho\r\n");
+		btnDespacho.setFont(new Font("Calibri", Font.PLAIN, 20));
 		btnDespacho.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -107,12 +108,12 @@ public class VentanaInicio extends JFrame {
 		});
 		panelSeleccion.add(btnDespacho);
 		
-		JPanel panelCentral = new JPanel();
-		panelCentral.setBorder(new LineBorder(null, 0));
-		contentPane.add(panelCentral, BorderLayout.CENTER);
+		//JPanel panelCentral = new JPanel();
+		//panelCentral.setBorder(new LineBorder(null, 0));
+		//contentPane.add(panelCentral, BorderLayout.CENTER);
 		
-		Canvas canvas = new Canvas();
-		panelCentral.add(canvas);
+		//Canvas canvas = new Canvas();
+		//panelCentral.add(canvas);
 	}
 
 }

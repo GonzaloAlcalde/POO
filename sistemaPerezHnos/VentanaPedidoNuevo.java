@@ -25,8 +25,8 @@ import javax.swing.SwingConstants;
 public class VentanaPedidoNuevo extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField textoRazonSocial;
+	private JTextField textoDetalles;
 	private JDatePickerImpl datePicker;
 	private int idCliente;
 
@@ -34,9 +34,8 @@ public class VentanaPedidoNuevo extends JDialog {
 	{
 		boolean usuarioElegido = false;
 		boolean fechaFueElegida = false;
-		boolean fechaFutura = false;
 		
-		if (!(textField.getText().isEmpty()))
+		if (!(textoRazonSocial.getText().isEmpty()))
 		{
 			usuarioElegido = true;
 		}
@@ -68,10 +67,10 @@ public class VentanaPedidoNuevo extends JDialog {
 				panel.add(lblCliente);
 			}
 			{
-				textField = new JTextField();
-				textField.setEditable(false);
-				panel.add(textField);
-				textField.setColumns(10);
+				textoRazonSocial = new JTextField();
+				textoRazonSocial.setEditable(false);
+				panel.add(textoRazonSocial);
+				textoRazonSocial.setColumns(10);
 			}
 			{
 				JButton btnBuscar = new JButton("Buscar");
@@ -81,7 +80,7 @@ public class VentanaPedidoNuevo extends JDialog {
 						VentanaBuscarCliente v= new VentanaBuscarCliente();
 						v.setModal(true);
 						v.setVisible(true);
-						textField.setText(v.getRazon_Social());
+						textoRazonSocial.setText(v.getRazon_Social());
 						idCliente = v.getIdCliente();
 					}
 				});
@@ -98,9 +97,9 @@ public class VentanaPedidoNuevo extends JDialog {
 				panel.add(lblDetalles);
 			}
 			{
-				textField_1 = new JTextField();
-				panel.add(textField_1);
-				textField_1.setColumns(10);
+				textoDetalles = new JTextField();
+				panel.add(textoDetalles);
+				textoDetalles.setColumns(10);
 			}
 		}
 		{
@@ -130,7 +129,7 @@ public class VentanaPedidoNuevo extends JDialog {
 					public void actionPerformed(ActionEvent e) {
 						if(pedidoValido())
 						{
-							Pedido.crearPedido(idCliente, textField_1, datePicker);
+							Pedido.crearPedido(idCliente, textoDetalles, datePicker);
 							setVisible(false);
 							ventanaAdministracion.vaciarTabla();
 							ventanaAdministracion.actualizarPedidos();

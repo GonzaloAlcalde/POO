@@ -33,25 +33,8 @@ public class VentanaBuscarCliente extends JDialog {
 		return idCliente;
 	}
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			VentanaBuscarCliente dialog = new VentanaBuscarCliente();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Create the dialog.
-	 */
-	public VentanaBuscarCliente() {
-
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public VentanaBuscarCliente() 
+	{
 		setBounds(100, 100, 450, 300);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPanel);
@@ -68,7 +51,10 @@ public class VentanaBuscarCliente extends JDialog {
 			JButton okButton = new JButton("OK");
 			okButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					if (tabla.getSelectedRow()!=-1)
+					{
 					cerrarRetornarResultado();
+					}
 				}
 			});
 			okButton.setActionCommand("OK");
