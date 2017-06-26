@@ -1,33 +1,32 @@
 package sistemaPerezHnos;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
+import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
+import net.sourceforge.jdatepicker.impl.SqlDateModel;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
-import javax.swing.JComboBox;
 import java.awt.GridLayout;
 import javax.swing.SwingConstants;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+//Libreria del calendario -- http://www.java2s.com/Code/Jar/j/Downloadjdatepicker132jar.htm
 
 public class VentanaPedidoNuevo extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textField;
 	private JTextField textField_1;
-	private JTextField textField_2;
+	private JDatePickerImpl datePicker;
 	private int idCliente;
 
 	public VentanaPedidoNuevo(VentanaAdministracion ventanaAdministracion) {
@@ -86,17 +85,18 @@ public class VentanaPedidoNuevo extends JDialog {
 		{
 			JPanel panel = new JPanel();
 			contentPanel.add(panel);
+			
+			SqlDateModel model = new SqlDateModel();
+			JDatePanelImpl datePanel = new JDatePanelImpl(model);
 			panel.setLayout(new GridLayout(0, 2, 0, 0));
-			{
-				JLabel lblFecha = new JLabel("Fecha");
-				lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
-				panel.add(lblFecha);
-			}
-			{
-				textField_2 = new JTextField();
-				panel.add(textField_2);
-				textField_2.setColumns(10);
-			}
+			
+			JLabel lblFecha = new JLabel("Fecha");
+			lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
+			panel.add(lblFecha);
+			datePicker = new JDatePickerImpl(datePanel);
+			 
+			panel.add(datePicker);
+			
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -106,7 +106,7 @@ public class VentanaPedidoNuevo extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						Pedido.crearPedido(idCliente, textField_1);
+						Pedido.crearPedido(idCliente, textField_1, datePicker);
 						setVisible(false);
 						ventanaAdministracion.vaciarTabla();
 						ventanaAdministracion.actualizarPedidos();
@@ -128,5 +128,6 @@ public class VentanaPedidoNuevo extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+		
 	}
 }

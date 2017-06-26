@@ -1,8 +1,6 @@
 package sistemaPerezHnos;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -37,7 +35,7 @@ public class VentanaAdministracion extends JFrame {
 		try{
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost/TP_Objetos", "root", "1234");
 	
-			String campos[] = {"idPedido", "idCliente", "detalles", "sector", "comentarios"};
+			String campos[] = {"idPedido", "idCliente", "fecha", "detalles", "sector", "comentarios"};
 			String cadenaCampos = "";
 			String coma = ""; 
 			for (String c : campos){
@@ -45,22 +43,25 @@ public class VentanaAdministracion extends JFrame {
 				coma = ",";
 			}
 			
-			//SELECT codigo, razon_social FROM cliente WHERE razon_social LIKE '%perez%';
 			String sql = "SELECT " + cadenaCampos + " FROM " + "pedidos;";
 			PreparedStatement ps = con.prepareStatement(sql);
 			
 			ResultSet rs = ps.executeQuery();
 			
-			Object registro[] = new Object[5];
+			Object registro[] = new Object[6];
 			
 			while (rs.next()){
 				
 				registro[0] = rs.getObject("idPedido");
 				registro[1] = rs.getObject("idCliente");
 				registro[2] = rs.getObject("detalles");
-				//registro[3] = rs.getObject("fecha");
-				registro[3] = rs.getObject("sector");
-				registro[4] = rs.getObject("comentarios");
+				
+			    java.sql.Date dbSqlDate = rs.getDate("fecha");
+			    java.util.Date dbSqlDateConverted = new java.util.Date(dbSqlDate.getTime());
+			    registro[3] = dbSqlDateConverted;
+				
+				registro[4] = rs.getObject("sector");
+				registro[5] = rs.getObject("comentarios");
 				
 				modelo.addRow(registro);
 			}
@@ -83,7 +84,7 @@ public class VentanaAdministracion extends JFrame {
 		
 		setTitle("P\u00E9rez Hnos. - Administraci\u00F3n");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 300);
+		setBounds(100, 100, 800, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -98,7 +99,7 @@ public class VentanaAdministracion extends JFrame {
 		modelo.addColumn("idPedido");
 		modelo.addColumn("idCliente");
 		modelo.addColumn("Detalles");
-		//modelo.addColumn("Fecha");
+		modelo.addColumn("Fecha");
 		modelo.addColumn("Sector");
 		modelo.addColumn("Comentarios");
 		
@@ -109,29 +110,6 @@ public class VentanaAdministracion extends JFrame {
 		}
 		
 		this.actualizarPedidos();
-		
-/*		tablaPedidos.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"Cliente", "Detalles", "Fecha", "Sector", "Comentarios"},
-			},
-			new String[] {
-				"Cliente", "Detalles", "Fecha", "Sector", "Comentarios"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				Object.class, String.class, Object.class, Object.class, Object.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-			boolean[] columnEditables = new boolean[] {
-				true, true, true, false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		}); */
-		
 		
 		JPanel panelBotonesPedidos = new JPanel();
 		contentPane.add(panelBotonesPedidos, BorderLayout.EAST);
