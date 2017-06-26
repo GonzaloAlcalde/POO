@@ -20,6 +20,7 @@ import java.awt.GridLayout;
 import javax.swing.SwingConstants;
 
 //Libreria del calendario -- http://www.java2s.com/Code/Jar/j/Downloadjdatepicker132jar.htm
+//Tutorial -- http://www.codejava.net/java-se/swing/how-to-use-jdatepicker-to-display-calendar-component
 
 public class VentanaPedidoNuevo extends JDialog {
 
@@ -29,6 +30,26 @@ public class VentanaPedidoNuevo extends JDialog {
 	private JDatePickerImpl datePicker;
 	private int idCliente;
 
+	private boolean pedidoValido()
+	{
+		boolean usuarioElegido = false;
+		boolean fechaFueElegida = false;
+		boolean fechaFutura = false;
+		
+		if (!(textField.getText().isEmpty()))
+		{
+			usuarioElegido = true;
+		}
+		if (datePicker.getModel().getValue() != null)
+		{
+			fechaFueElegida = true;
+		}
+		
+		return (usuarioElegido && fechaFueElegida);
+		
+		
+	}
+	
 	public VentanaPedidoNuevo(VentanaAdministracion ventanaAdministracion) {
 		setResizable(false);
 		setTitle("Pedido nuevo");
@@ -94,6 +115,7 @@ public class VentanaPedidoNuevo extends JDialog {
 			lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
 			panel.add(lblFecha);
 			datePicker = new JDatePickerImpl(datePanel);
+			datePicker.getModel().setValue(null);
 			 
 			panel.add(datePicker);
 			
@@ -106,10 +128,13 @@ public class VentanaPedidoNuevo extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						Pedido.crearPedido(idCliente, textField_1, datePicker);
-						setVisible(false);
-						ventanaAdministracion.vaciarTabla();
-						ventanaAdministracion.actualizarPedidos();
+						if(pedidoValido())
+						{
+							Pedido.crearPedido(idCliente, textField_1, datePicker);
+							setVisible(false);
+							ventanaAdministracion.vaciarTabla();
+							ventanaAdministracion.actualizarPedidos();
+						}
 					}
 				});
 				
