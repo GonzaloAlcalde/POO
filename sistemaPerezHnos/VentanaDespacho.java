@@ -12,12 +12,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JScrollPane;
 
 public class VentanaDespacho extends JFrame {
 	
 	private VentanaInicio home;
 
 	private JPanel contentPane;
+	private JTable table;
 
 	/**
 	 * Create the frame.
@@ -35,27 +37,6 @@ public class VentanaDespacho extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.CENTER);
-		
-		JTable table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"Cliente", "Detalles", "Fecha", "Comentarios"},
-			},
-			new String[] {
-				"Cliente", "Detalles", "Fecha", "Comentarios"
-			}
-		) {
-			boolean[] columnEditables = new boolean[] {
-				false, false, false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
-		panel.add(table);
-		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.EAST);
 		panel_1.setLayout(new BorderLayout(0, 0));
@@ -71,5 +52,11 @@ public class VentanaDespacho extends JFrame {
 			}
 		});
 		panel_1.add(btnVolver, BorderLayout.SOUTH);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		contentPane.add(scrollPane, BorderLayout.CENTER);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
 	}
 }

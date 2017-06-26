@@ -11,15 +11,18 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.GridLayout;
+import javax.swing.JScrollPane;
 
 public class VentanaProduccion extends JFrame {
 
 	private VentanaInicio home;
 
 	private JPanel contentPane;
-	private JTable table;
 	private JPanel panel;
 	private JButton btnAsignarMaquina;
+	private JScrollPane scrollPane;
+	private JTable table;
+	private JButton btnProducido;
 
 	/**
 	 * Create the frame.
@@ -37,25 +40,6 @@ public class VentanaProduccion extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"Cliente", "Detalle", "Fecha", "Maquina", "Comentarios"},
-			},
-			new String[] {
-				"Cliente", "Detalle", "Fecha", "Maquina", "Comentarios"
-			}
-		) {
-			boolean[] columnEditables = new boolean[] {
-				false, false, false, false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
-		
-		contentPane.add(table, BorderLayout.CENTER);
-		
 		panel = new JPanel();
 		contentPane.add(panel, BorderLayout.EAST);
 		panel.setLayout(new BorderLayout(0, 0));
@@ -69,6 +53,15 @@ public class VentanaProduccion extends JFrame {
 		});
 		
 		panel.add(btnVolver, BorderLayout.SOUTH);
+		
+		btnProducido = new JButton("Producido");
+		panel.add(btnProducido, BorderLayout.NORTH);
+		
+		scrollPane = new JScrollPane();
+		contentPane.add(scrollPane, BorderLayout.CENTER);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
 		
 		
 	}

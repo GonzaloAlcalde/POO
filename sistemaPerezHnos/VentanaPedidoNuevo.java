@@ -30,23 +30,7 @@ public class VentanaPedidoNuevo extends JDialog {
 	private JTextField textField_2;
 	private int idCliente;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			VentanaPedidoNuevo dialog = new VentanaPedidoNuevo();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Create the dialog.
-	 */
-	public VentanaPedidoNuevo() {
+	public VentanaPedidoNuevo(VentanaAdministracion ventanaAdministracion) {
 		setResizable(false);
 		setTitle("Pedido nuevo");
 		setBounds(100, 100, 500, 150);
@@ -124,6 +108,8 @@ public class VentanaPedidoNuevo extends JDialog {
 					public void actionPerformed(ActionEvent e) {
 						crearPedido();
 						setVisible(false);
+						ventanaAdministracion.vaciarTabla();
+						ventanaAdministracion.actualizarPedidos();
 					}
 				});
 				

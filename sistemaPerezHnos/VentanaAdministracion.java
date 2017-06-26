@@ -16,55 +16,27 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
 
 public class VentanaAdministracion extends JFrame {
 
 	private VentanaInicio home;
+	private VentanaAdministracion ventanaAdministracion= this;
 	
 	private JPanel contentPane;
 	private JTable tablaPedidos;
-
-	/**
-	 * Create the frame.
-	 */
-	public VentanaAdministracion(VentanaInicio inicio) {
-		
-		home = inicio;
-		
-		home.setVisible(false);
-		
-		setTitle("P\u00E9rez Hnos. - Administraci\u00F3n");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
-		
-		tablaPedidos = new JTable();
-		DefaultTableModel modelo = new DefaultTableModel(){
-			 @Override
-		    public boolean isCellEditable(int row, int column) {
-		       //all cells false
-		       return false;
-		    }
-		};
-		modelo.addColumn("idPedido");
-		modelo.addColumn("idCliente");
-		modelo.addColumn("Detalles");
-		//modelo.addColumn("Fecha");
-		modelo.addColumn("Sector");
-		modelo.addColumn("Comentarios");
-		
-		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (ClassNotFoundException | IllegalAccessException | InstantiationException e){
-			e.printStackTrace();
-		}
-		
-		try {
+	private DefaultTableModel modelo;
+	
+	public void vaciarTabla()
+	{
+		modelo.setRowCount(0);
+	}
+	
+	public void actualizarPedidos()
+	{
+		try{
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost/TP_Objetos", "root", "1234");
-
+	
 			String campos[] = {"idPedido", "idCliente", "detalles", "sector", "comentarios"};
 			String cadenaCampos = "";
 			String coma = ""; 
@@ -96,13 +68,48 @@ public class VentanaAdministracion extends JFrame {
 			rs.close();
 			ps.close();
 			con.close();
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public VentanaAdministracion(VentanaInicio inicio) {
+		
+		home = inicio;
+		
+		home.setVisible(false);
+		
+		setTitle("P\u00E9rez Hnos. - Administraci\u00F3n");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 600, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(new BorderLayout(0, 0));
+		modelo = new DefaultTableModel(){
+			 @Override
+		    public boolean isCellEditable(int row, int column) {
+		       //all cells false
+		       return false;
+		    }
+		};
+		modelo.addColumn("idPedido");
+		modelo.addColumn("idCliente");
+		modelo.addColumn("Detalles");
+		//modelo.addColumn("Fecha");
+		modelo.addColumn("Sector");
+		modelo.addColumn("Comentarios");
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		} catch (ClassNotFoundException | IllegalAccessException | InstantiationException e){
 			e.printStackTrace();
 		}
 		
-		tablaPedidos.setModel(modelo);
+		this.actualizarPedidos();
+		
 /*		tablaPedidos.setModel(new DefaultTableModel(
 			new Object[][] {
 				{"Cliente", "Detalles", "Fecha", "Sector", "Comentarios"},
@@ -124,7 +131,6 @@ public class VentanaAdministracion extends JFrame {
 				return columnEditables[column];
 			}
 		}); */
-		contentPane.add(tablaPedidos, BorderLayout.CENTER);
 		
 		
 		JPanel panelBotonesPedidos = new JPanel();
@@ -135,7 +141,7 @@ public class VentanaAdministracion extends JFrame {
 		btnNuevoPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//SE CREA LA VENTANA PEDIDO
-				VentanaPedidoNuevo v= new VentanaPedidoNuevo();
+				VentanaPedidoNuevo v= new VentanaPedidoNuevo(ventanaAdministracion);
 				v.setModal(true);
 				v.setVisible(true);
 			}
@@ -150,6 +156,14 @@ public class VentanaAdministracion extends JFrame {
 			}
 		});
 		panelBotonesPedidos.add(btnVolver, BorderLayout.SOUTH);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		contentPane.add(scrollPane, BorderLayout.WEST);
+		
+		tablaPedidos = new JTable();
+		
+		tablaPedidos.setModel(modelo);
+		contentPane.add(tablaPedidos, BorderLayout.CENTER);
 	}
 
 }

@@ -112,7 +112,7 @@ public class VentanaInicio extends JFrame {
 		panelSeleccion.add(btnDespacho);
 		
 		JPanel panelCentral = new JPanel();
-		panelCentral.setBorder(new LineBorder(new Color(0, 0, 0), 8));
+		panelCentral.setBorder(new LineBorder(null, 0));
 		contentPane.add(panelCentral, BorderLayout.CENTER);
 		
 		Canvas canvas = new Canvas();
