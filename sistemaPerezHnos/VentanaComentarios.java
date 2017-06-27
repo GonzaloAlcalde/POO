@@ -103,18 +103,18 @@ public class VentanaComentarios extends JFrame {
 		contentPane.add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		JButton btnAgregarComentario = new JButton("Agragar Comentario");
+		JButton btnAgregarComentario = new JButton("Agregar Comentario");
 		panel.add(btnAgregarComentario);
 		
-		JButton btnAtrás = new JButton("Atr\u00E1s");
-		btnAtrás.addMouseListener(new MouseAdapter() {
+		JButton btnAtras = new JButton("Atras");
+		btnAtras.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				setVisible(false);
 				home.setVisible(true);
 			}
 		});
-		panel.add(btnAtrás);
+		panel.add(btnAtras);
 	}
 
 }
