@@ -50,4 +50,21 @@ public class Pedido {
 			s.printStackTrace();
 		}
 	}
+	
+	public static void asignarMaquina(int idPedido, String maquina){
+		try {
+			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/TP_Objetos", "root", "1234");
+
+			String sql = "UPDATE pedidos SET maquina = " + maquina + "WHERE idPedido = " + idPedido + ";"; 
+			
+			Statement st1 = conexion.createStatement();
+			st1.executeUpdate(sql);
+			
+			st1.close();
+			conexion.close();
+					
+		} catch (SQLException s){
+			s.printStackTrace();
+		}
+	}
 }
