@@ -61,8 +61,6 @@ public class VentanaOficinaTecnica extends JFrame {
 			    java.sql.Date dbSqlDate = rs.getDate("fecha");
 			    java.util.Date dbSqlDateConverted = new java.util.Date(dbSqlDate.getTime());
 			    registro[3] = dbSqlDateConverted;
-				
-				//registro[4] = rs.getObject("sector");
 				registro[5] = rs.getObject("comentarios");
 				
 				modelo.addRow(registro);

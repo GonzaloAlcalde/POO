@@ -30,4 +30,24 @@ public class Pedido {
 			s.printStackTrace();
 		}
 	}
+	
+	public static void cambiarSector(Integer idPedido, String sector)
+	{
+		try {
+			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/TP_Objetos", "root", "1234");
+			
+			String idPedidoString = Integer.toString(idPedido);
+			
+			String sql = "UPDATE pedidos SET sector = '" + sector + "' WHERE idPedido = " + idPedidoString + ";";  
+			
+			Statement st1 = conexion.createStatement();
+			st1.executeUpdate(sql);
+			
+			st1.close();
+			conexion.close();
+					
+		} catch (SQLException s){
+			s.printStackTrace();
+		}
+	}
 }
