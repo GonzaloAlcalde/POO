@@ -23,6 +23,7 @@ public class VentanaAsignarMaquina extends JDialog {
 	private JButton btnAsignar;
 	
 	private Integer idPedido;
+	private JButton btnVolver;
 
 	/**
 	 * Create the frame.
@@ -33,7 +34,7 @@ public class VentanaAsignarMaquina extends JDialog {
 		setResizable(false);
 		setTitle("P\u00E9rez Hnos. - Asignar M\u00E1quina");
 		setModal(true);
-		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 173, 139);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -58,7 +59,14 @@ public class VentanaAsignarMaquina extends JDialog {
 			new String[] {
 				"M\u00E1quina"
 			}
-		));
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
 		
 		panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.EAST);
@@ -73,7 +81,15 @@ public class VentanaAsignarMaquina extends JDialog {
 				}
 			}
 		});
-		panel_1.add(btnAsignar, BorderLayout.SOUTH);
+		panel_1.add(btnAsignar, BorderLayout.NORTH);
+		
+		btnVolver = new JButton("Volver");
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
+		panel_1.add(btnVolver, BorderLayout.SOUTH);
 	}
 	
 	private void cerrarRetornarResultado()
