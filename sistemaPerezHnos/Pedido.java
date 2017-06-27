@@ -67,4 +67,23 @@ public class Pedido {
 			s.printStackTrace();
 		}
 	}
+	
+	public static void eliminarPedido(Integer idPedido){
+		try {
+			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/TP_Objetos", "root", "1234");
+			
+			String idPedidoString = Integer.toString(idPedido);
+
+			String sql = "DELETE FROM pedidos WHERE idPedido = " + idPedidoString;
+			
+			Statement st1 = conexion.createStatement();
+			st1.executeUpdate(sql);
+			
+			st1.close();
+			conexion.close();
+					
+		} catch (SQLException s){
+			s.printStackTrace();
+		}
+	}
 }
