@@ -35,7 +35,7 @@ public class VentanaAdministracion extends JFrame {
 		try{
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost/TP_Objetos", "root", "1234");
 	
-			String campos[] = {"idPedido", "idCliente", "fecha", "detalles", "sector", "comentarios"};
+			String campos[] = {"idPedido", "razon_social", "fecha", "detalles", "sector", "comentarios"};
 			String cadenaCampos = "";
 			String coma = ""; 
 			for (String c : campos){
@@ -43,7 +43,7 @@ public class VentanaAdministracion extends JFrame {
 				coma = ",";
 			}
 			
-			String sql = "SELECT " + cadenaCampos + " FROM " + "pedidos ORDER BY fecha;";
+			String sql = "SELECT " + cadenaCampos + " FROM " + "pedidos, cliente WHERE pedidos.idCliente = cliente.idCliente ORDER BY fecha;";
 			PreparedStatement ps = con.prepareStatement(sql);
 			
 			ResultSet rs = ps.executeQuery();
@@ -53,7 +53,7 @@ public class VentanaAdministracion extends JFrame {
 			while (rs.next()){
 				
 				registro[0] = rs.getObject("idPedido");
-				registro[1] = rs.getObject("idCliente");
+				registro[1] = rs.getObject("razon_social");
 				registro[2] = rs.getObject("detalles");
 				
 			    java.sql.Date dbSqlDate = rs.getDate("fecha");
@@ -97,7 +97,7 @@ public class VentanaAdministracion extends JFrame {
 		    }
 		};
 		modelo.addColumn("idPedido");
-		modelo.addColumn("idCliente");
+		modelo.addColumn("Razon social");
 		modelo.addColumn("Detalles");
 		modelo.addColumn("Fecha");
 		modelo.addColumn("Sector");
