@@ -4,9 +4,15 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 
@@ -17,9 +23,61 @@ public class VentanaOficinaTecnica extends JFrame {
 	private JPanel contentPane;
 	private JPanel panel;
 	private JButton btnAsignarMaquina;
+	private DefaultTableModel modelo;
 	private JScrollPane scrollPane;
-	private JTable table;
+	private JTable tablaPedidos;
 
+	public void vaciarTabla()
+	{
+		modelo.setRowCount(0);
+	}
+	
+	public void actualizarPedidos()
+	{
+		try{
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost/TP_Objetos", "root", "1234");
+	
+			String campos[] = {"idPedido", "idCliente", "fecha", "detalles", "comentarios"};
+			String cadenaCampos = "";
+			String coma = ""; 
+			for (String c : campos){
+				cadenaCampos += coma + c;
+				coma = ",";
+			}
+			
+			String sql = "SELECT " + cadenaCampos + " FROM " + "pedidos WHERE sector = Oficina_Tecnica ORDER BY fecha;";
+			PreparedStatement ps = con.prepareStatement(sql);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			Object registro[] = new Object[6];
+			
+			while (rs.next()){
+				
+				registro[0] = rs.getObject("idPedido");
+				registro[1] = rs.getObject("idCliente");
+				registro[2] = rs.getObject("detalles");
+				
+			    java.sql.Date dbSqlDate = rs.getDate("fecha");
+			    java.util.Date dbSqlDateConverted = new java.util.Date(dbSqlDate.getTime());
+			    registro[3] = dbSqlDateConverted;
+				
+				registro[4] = rs.getObject("sector");
+				registro[5] = rs.getObject("comentarios");
+				
+				modelo.addRow(registro);
+			}
+			
+			rs.close();
+			ps.close();
+			con.close();
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Create the frame.
 	 */
@@ -40,6 +98,28 @@ public class VentanaOficinaTecnica extends JFrame {
 		contentPane.add(panel, BorderLayout.EAST);
 		panel.setLayout(new BorderLayout(0, 0));
 		
+		modelo = new DefaultTableModel(){
+			 @Override
+		    public boolean isCellEditable(int row, int column) {
+		       //all cells false
+		       return false;
+		    }
+		};
+		modelo.addColumn("idPedido");
+		modelo.addColumn("idCliente");
+		modelo.addColumn("Detalles");
+		modelo.addColumn("Fecha");
+		modelo.addColumn("Sector");
+		modelo.addColumn("Comentarios");
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		} catch (ClassNotFoundException | IllegalAccessException | InstantiationException e){
+			e.printStackTrace();
+		}
+		
+		this.actualizarPedidos();
+		
 		btnAsignarMaquina = new JButton("Asignar Maquina");
 		panel.add(btnAsignarMaquina, BorderLayout.NORTH);
 		
@@ -56,10 +136,14 @@ public class VentanaOficinaTecnica extends JFrame {
 		scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		
-		table = new JTable();
-		scrollPane.setViewportView(table);
+		JScrollPane scrollPane = new JScrollPane();
 		
+		contentPane.add(scrollPane, BorderLayout.CENTER);
 		
+		tablaPedidos = new JTable();
+		
+		tablaPedidos.setModel(modelo);
+		scrollPane.setViewportView(tablaPedidos);
 	}
 
 }
