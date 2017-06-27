@@ -15,6 +15,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class VentanaOficinaTecnica extends JFrame {
 
@@ -118,6 +120,20 @@ public class VentanaOficinaTecnica extends JFrame {
 		this.actualizarPedidos();
 		
 		btnAsignarMaquina = new JButton("Asignar Maquina");
+		btnAsignarMaquina.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(tablaPedidos.getSelectedRow() != -1)
+				{
+					int fila = tablaPedidos.getSelectedRow();
+
+					DefaultTableModel modelo = (DefaultTableModel)tablaPedidos.getModel();
+					Integer idPedido = (Integer) modelo.getValueAt(fila, 0);
+					VentanaAsignarMaquina v = new VentanaAsignarMaquina(idPedido);
+					v.setVisible(true);
+				}
+			}
+		});
 		panel.add(btnAsignarMaquina, BorderLayout.NORTH);
 		
 		JButton btnVolver = new JButton("Volver");
