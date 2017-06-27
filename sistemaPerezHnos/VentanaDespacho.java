@@ -116,6 +116,13 @@ public class VentanaDespacho extends JFrame {
 		});
 		panel_1.add(btnVolver, BorderLayout.SOUTH);
 		
+		JPanel panel = new JPanel();
+		panel_1.add(panel, BorderLayout.CENTER);
+		panel.setLayout(new BorderLayout(0, 0));
+		
+		JButton btnComentarios = new JButton("Comentarios");
+		panel.add(btnComentarios, BorderLayout.NORTH);
+		
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		

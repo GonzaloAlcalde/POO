@@ -28,6 +28,8 @@ public class VentanaOficinaTecnica extends JFrame {
 	private DefaultTableModel modelo;
 	private JScrollPane scrollPane;
 	private JTable tablaPedidos;
+	private JPanel panel_1;
+	private JButton btnComentarios;
 
 	public void vaciarTabla()
 	{
@@ -146,6 +148,13 @@ public class VentanaOficinaTecnica extends JFrame {
 		});
 		
 		panel.add(btnVolver, BorderLayout.SOUTH);
+		
+		panel_1 = new JPanel();
+		panel.add(panel_1, BorderLayout.CENTER);
+		panel_1.setLayout(new BorderLayout(0, 0));
+		
+		btnComentarios = new JButton("Comentarios");
+		panel_1.add(btnComentarios, BorderLayout.NORTH);
 		
 		scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);

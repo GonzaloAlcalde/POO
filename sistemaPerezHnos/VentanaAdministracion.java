@@ -133,6 +133,13 @@ public class VentanaAdministracion extends JFrame {
 		});
 		panelBotonesPedidos.add(btnVolver, BorderLayout.SOUTH);
 		
+		JPanel panel = new JPanel();
+		panelBotonesPedidos.add(panel, BorderLayout.CENTER);
+		panel.setLayout(new BorderLayout(0, 0));
+		
+		JButton btnComentarios = new JButton("Comentarios");
+		panel.add(btnComentarios, BorderLayout.NORTH);
+		
 		JScrollPane scrollPane = new JScrollPane();
 		
 		contentPane.add(scrollPane, BorderLayout.CENTER);
