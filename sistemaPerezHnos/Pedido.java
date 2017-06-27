@@ -51,17 +51,21 @@ public class Pedido {
 		}
 	}
 	
-	public static void asignarMaquina(int idPedido, String maquina){
+	public static void asignarMaquina(Integer idPedido, String maquina){
 		try {
 			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/TP_Objetos", "root", "1234");
 
-			String sql = "UPDATE pedidos SET maquina = " + maquina + "WHERE idPedido = " + idPedido + ";"; 
+			String idPedidoString = Integer.toString(idPedido);
+			
+			String sql = "UPDATE pedidos SET maquina = '" + maquina + "' WHERE idPedido = " + idPedidoString + ";"; 
 			
 			Statement st1 = conexion.createStatement();
 			st1.executeUpdate(sql);
 			
 			st1.close();
 			conexion.close();
+			
+			Pedido.cambiarSector(idPedido, "Produccion");
 					
 		} catch (SQLException s){
 			s.printStackTrace();

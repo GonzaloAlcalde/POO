@@ -95,12 +95,14 @@ public class VentanaDespacho extends JFrame {
 		JButton btnNewButton = new JButton("Despachar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int row = table.getSelectedRow();
-				DefaultTableModel modelo = (DefaultTableModel)table.getModel();
-				Integer idPedido = (Integer) modelo.getValueAt(row, 0);
-				Pedido.eliminarPedido(idPedido);
-				vaciarTabla();
-				actualizarPedidos();
+				if(table.getSelectedRow() != -1){
+					int row = table.getSelectedRow();
+					DefaultTableModel modelo = (DefaultTableModel)table.getModel();
+					Integer idPedido = (Integer) modelo.getValueAt(row, 0);
+					Pedido.eliminarPedido(idPedido);
+					vaciarTabla();
+					actualizarPedidos();
+				}
 			}
 		});
 		panel_1.add(btnNewButton, BorderLayout.NORTH);

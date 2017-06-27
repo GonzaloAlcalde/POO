@@ -107,12 +107,14 @@ public class VentanaProduccion extends JFrame {
 		btnProducido = new JButton("Producido");
 		btnProducido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int row = table.getSelectedRow();
-				DefaultTableModel modelo = (DefaultTableModel)table.getModel();
-				Integer idPedido = (Integer) modelo.getValueAt(row, 0);
-				Pedido.cambiarSector(idPedido, "Despacho");
-				vaciarTabla();
-				actualizarPedidos();
+				if(table.getSelectedRow() != -1){
+					int row = table.getSelectedRow();
+					DefaultTableModel modelo = (DefaultTableModel)table.getModel();
+					Integer idPedido = (Integer) modelo.getValueAt(row, 0);
+					Pedido.cambiarSector(idPedido, "Despacho");
+					vaciarTabla();
+					actualizarPedidos();
+				}
 			}
 		});
 		panel.add(btnProducido, BorderLayout.NORTH);

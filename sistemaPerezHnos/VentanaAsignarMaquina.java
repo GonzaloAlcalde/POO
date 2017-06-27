@@ -33,7 +33,7 @@ public class VentanaAsignarMaquina extends JDialog {
 		setResizable(false);
 		setTitle("P\u00E9rez Hnos. - Asignar M\u00E1quina");
 		setModal(true);
-		setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 173, 139);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -48,12 +48,12 @@ public class VentanaAsignarMaquina extends JDialog {
 		panel.add(tablaMaquina, BorderLayout.CENTER);
 		tablaMaquina.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"Oxigeno 1"},
-				{"Oxigeno 2"},
-				{"Oxigeno 3"},
-				{"Oxigeno 4"},
-				{"Plasma 5"},
-				{"Plasma 6"},
+				{"Oxigeno1"},
+				{"Oxigeno2"},
+				{"Oxigeno3"},
+				{"Oxigeno4"},
+				{"Plasma1"},
+				{"Plasma2"},
 			},
 			new String[] {
 				"M\u00E1quina"

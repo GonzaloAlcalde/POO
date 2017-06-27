@@ -39,7 +39,7 @@ public class VentanaOficinaTecnica extends JFrame {
 		try{
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost/TP_Objetos", "root", "1234");
 	
-			String campos[] = {"idPedido", "idCliente", "fecha", "detalles", "sector", "comentarios"};
+			String campos[] = {"idPedido", "idCliente", "fecha", "detalles", "sector"};
 			String cadenaCampos = "";
 			String coma = ""; 
 			for (String c : campos){
@@ -52,7 +52,7 @@ public class VentanaOficinaTecnica extends JFrame {
 			
 			ResultSet rs = ps.executeQuery();
 			
-			Object registro[] = new Object[6];
+			Object registro[] = new Object[5];
 			
 			while (rs.next()){
 				
@@ -63,7 +63,6 @@ public class VentanaOficinaTecnica extends JFrame {
 			    java.sql.Date dbSqlDate = rs.getDate("fecha");
 			    java.util.Date dbSqlDateConverted = new java.util.Date(dbSqlDate.getTime());
 			    registro[3] = dbSqlDateConverted;
-				registro[5] = rs.getObject("comentarios");
 				
 				modelo.addRow(registro);
 			}
@@ -88,7 +87,7 @@ public class VentanaOficinaTecnica extends JFrame {
 		home.setVisible(false);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 553, 325);
+		setBounds(100, 100, 800, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -109,7 +108,6 @@ public class VentanaOficinaTecnica extends JFrame {
 		modelo.addColumn("idCliente");
 		modelo.addColumn("Detalles");
 		modelo.addColumn("Fecha");
-		modelo.addColumn("Comentarios");
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -131,6 +129,9 @@ public class VentanaOficinaTecnica extends JFrame {
 					Integer idPedido = (Integer) modelo.getValueAt(fila, 0);
 					VentanaAsignarMaquina v = new VentanaAsignarMaquina(idPedido);
 					v.setVisible(true);
+					
+					vaciarTabla();
+					actualizarPedidos();
 				}
 			}
 		});
