@@ -37,7 +37,7 @@ public class VentanaProduccion extends JFrame {
 		try{
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost/TP_Objetos", "root", "1234");
 	
-			String campos[] = {"idPedido", "razon_social", "fecha", "detalles", "maquina", "comentarios"};
+			String campos[] = {"idPedido", "razon_social", "fecha", "detalles", "maquina"};
 			String cadenaCampos = "";
 			String coma = ""; 
 			for (String c : campos){
@@ -50,7 +50,7 @@ public class VentanaProduccion extends JFrame {
 			
 			ResultSet rs = ps.executeQuery();
 			
-			Object registro[] = new Object[6];
+			Object registro[] = new Object[5];
 			
 			while (rs.next()){
 				
@@ -63,7 +63,6 @@ public class VentanaProduccion extends JFrame {
 			    registro[3] = dbSqlDateConverted;
 				
 				registro[4] = rs.getObject("maquina");
-				registro[5] = rs.getObject("comentarios");
 				
 				modelo.addRow(registro);
 			}
@@ -136,7 +135,6 @@ public class VentanaProduccion extends JFrame {
 		modelo.addColumn("Detalles");
 		modelo.addColumn("Fecha");
 		modelo.addColumn("Maquina asignada");
-		modelo.addColumn("Comentarios");
 		
 
 		table.setModel(modelo);

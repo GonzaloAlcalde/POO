@@ -35,7 +35,7 @@ public class VentanaAdministracion extends JFrame {
 		try{
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost/TP_Objetos", "root", "1234");
 	
-			String campos[] = {"idPedido", "razon_social", "fecha", "detalles", "sector", "comentarios"};
+			String campos[] = {"idPedido", "razon_social", "fecha", "detalles", "sector"};
 			String cadenaCampos = "";
 			String coma = ""; 
 			for (String c : campos){
@@ -48,7 +48,7 @@ public class VentanaAdministracion extends JFrame {
 			
 			ResultSet rs = ps.executeQuery();
 			
-			Object registro[] = new Object[6];
+			Object registro[] = new Object[5];
 			
 			while (rs.next()){
 				
@@ -61,7 +61,6 @@ public class VentanaAdministracion extends JFrame {
 			    registro[3] = dbSqlDateConverted;
 				
 				registro[4] = rs.getObject("sector");
-				registro[5] = rs.getObject("comentarios");
 				
 				modelo.addRow(registro);
 			}
@@ -101,7 +100,6 @@ public class VentanaAdministracion extends JFrame {
 		modelo.addColumn("Detalles");
 		modelo.addColumn("Fecha");
 		modelo.addColumn("Sector");
-		modelo.addColumn("Comentarios");
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
