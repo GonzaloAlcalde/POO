@@ -3,6 +3,7 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
@@ -19,6 +20,7 @@ public class VentanaProduccion extends JFrame {
 	private JScrollPane scrollPane;
 	private JTable table;
 	private JButton btnProducido;
+	private DefaultTableModel modelo;
 
 	/**
 	 * Create the frame.
@@ -30,7 +32,7 @@ public class VentanaProduccion extends JFrame {
 		home.setVisible(false);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 800, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -59,7 +61,24 @@ public class VentanaProduccion extends JFrame {
 		table = new JTable();
 		scrollPane.setViewportView(table);
 		
+		modelo = new DefaultTableModel(){
+			 @Override
+		    public boolean isCellEditable(int row, int column) {
+		       //all cells false
+		       return false;
+		    }
+		};
+		modelo.addColumn("idPedido");
+		modelo.addColumn("Razon social");
+		modelo.addColumn("Detalles");
+		modelo.addColumn("Fecha");
+		modelo.addColumn("Maquina asignada");
+		modelo.addColumn("Comentarios");
 		
+
+		table.setModel(modelo);
+		scrollPane.setViewportView(table);
 	}
+	
 
 }
