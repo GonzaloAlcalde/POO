@@ -31,6 +31,12 @@ public class VentanaProduccion extends JFrame {
 	private JPanel panel_1;
 	private JButton btnComentarios;
 
+	private String sector = "Produccion";
+	
+	public String getSector(){
+		return sector;
+	}
+	
 	public void vaciarTabla()
 	{
 		modelo.setRowCount(0);
@@ -134,7 +140,7 @@ public class VentanaProduccion extends JFrame {
 					int row = table.getSelectedRow();
 					DefaultTableModel modelo = (DefaultTableModel)table.getModel();
 					Integer idPedido = (Integer) modelo.getValueAt(row, 0);
-					VentanaComentarios v = new VentanaComentarios(thisWindow, idPedido);
+					VentanaComentarios v = new VentanaComentarios(thisWindow, idPedido, thisWindow.getSector());
 					v.setVisible(true);
 				}
 			}

@@ -25,6 +25,12 @@ public class VentanaAdministracion extends JFrame {
 	private JTable tablaPedidos;
 	private DefaultTableModel modelo;
 	
+	private String sector = "Administracion";
+	
+	public String getSector(){
+		return sector;
+	}
+	
 	public void vaciarTabla()
 	{
 		modelo.setRowCount(0);
@@ -43,7 +49,7 @@ public class VentanaAdministracion extends JFrame {
 				coma = ",";
 			}
 			
-			String sql = "SELECT " + cadenaCampos + " FROM " + "pedidos, cliente WHERE pedidos.idCliente = cliente.idCliente ORDER BY fecha;";
+			String sql = "SELECT " + cadenaCampos + " FROM " + "pedidos, cliente WHERE pedidos.idCliente = cliente.idCliente AND despachado = false ORDER BY fecha;";
 			PreparedStatement ps = con.prepareStatement(sql);
 			
 			ResultSet rs = ps.executeQuery();
@@ -144,7 +150,7 @@ public class VentanaAdministracion extends JFrame {
 					int row = tablaPedidos.getSelectedRow();
 					DefaultTableModel modelo = (DefaultTableModel)tablaPedidos.getModel();
 					Integer idPedido = (Integer) modelo.getValueAt(row, 0);
-					VentanaComentarios v = new VentanaComentarios(thisWindow, idPedido);
+					VentanaComentarios v = new VentanaComentarios(thisWindow, idPedido, thisWindow.getSector());
 					v.setVisible(true);
 				}
 			}

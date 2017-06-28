@@ -19,7 +19,7 @@ public class VentanaAgregarComentario extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTextField comentario;
 	
-	public VentanaAgregarComentario(Integer idPedido, VentanaComentarios ventanaComentarios) {
+	public VentanaAgregarComentario(Integer idPedido, VentanaComentarios ventanaComentarios, String sector) {
 		setModal(true);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
@@ -42,7 +42,7 @@ public class VentanaAgregarComentario extends JDialog {
 					public void actionPerformed(ActionEvent e) {
 						if (!comentario.getText().isEmpty())
 						{
-							Comentarios.agregarComentario(idPedido, comentario.getText());
+							Comentarios.agregarComentario(idPedido, comentario.getText(), sector);
 							ventanaComentarios.vaciarTabla();
 							ventanaComentarios.actualizarComentarios(idPedido);
 							setVisible(false);

@@ -26,6 +26,12 @@ public class VentanaDespacho extends JFrame {
 	private JTable table;
 	private DefaultTableModel modelo;
 	
+	private String sector = "Despacho";
+	
+	public String getSector(){
+		return sector;
+	}
+	
 	public void vaciarTabla()
 	{
 		modelo.setRowCount(0);
@@ -44,7 +50,7 @@ public class VentanaDespacho extends JFrame {
 				coma = ",";
 			}
 			
-			String sql = "SELECT " + cadenaCampos + " FROM " + "pedidos, cliente WHERE pedidos.idCliente = cliente.idCliente AND sector = 'Despacho' ORDER BY fecha;";
+			String sql = "SELECT " + cadenaCampos + " FROM " + "pedidos, cliente WHERE pedidos.idCliente = cliente.idCliente AND sector = 'Despacho' AND despachado = false ORDER BY fecha;";
 			PreparedStatement ps = con.prepareStatement(sql);
 			
 			ResultSet rs = ps.executeQuery();
@@ -101,7 +107,7 @@ public class VentanaDespacho extends JFrame {
 					int row = table.getSelectedRow();
 					DefaultTableModel modelo = (DefaultTableModel)table.getModel();
 					Integer idPedido = (Integer) modelo.getValueAt(row, 0);
-					Pedido.eliminarPedido(idPedido);
+					Pedido.despacharPedido(idPedido);
 					vaciarTabla();
 					actualizarPedidos();
 				}
@@ -129,7 +135,7 @@ public class VentanaDespacho extends JFrame {
 					int row = table.getSelectedRow();
 					DefaultTableModel modelo = (DefaultTableModel)table.getModel();
 					Integer idPedido = (Integer) modelo.getValueAt(row, 0);
-					VentanaComentarios v = new VentanaComentarios(thisWindow, idPedido);
+					VentanaComentarios v = new VentanaComentarios(thisWindow, idPedido, thisWindow.getSector());
 					v.setVisible(true);
 				}
 			}

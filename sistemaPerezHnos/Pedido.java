@@ -72,13 +72,13 @@ public class Pedido {
 		}
 	}
 	
-	public static void eliminarPedido(Integer idPedido){
+	public static void despacharPedido(Integer idPedido){
 		try {
 			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/TP_Objetos", "root", "1234");
 			
 			String idPedidoString = Integer.toString(idPedido);
 
-			String sql = "DELETE FROM pedidos WHERE idPedido = " + idPedidoString;
+			String sql = "UPDATE pedidos SET despachado = true WHERE idPedido = " + idPedidoString;
 			
 			Statement st1 = conexion.createStatement();
 			st1.executeUpdate(sql);

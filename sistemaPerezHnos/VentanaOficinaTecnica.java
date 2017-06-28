@@ -32,6 +32,12 @@ public class VentanaOficinaTecnica extends JFrame {
 	private JTable tablaPedidos;
 	private JPanel panel_1;
 	private JButton btnComentarios;
+	
+	private String sector = "Oficina_tecnica";
+	
+	public String getSector(){
+		return sector;
+	}
 
 	public void vaciarTabla()
 	{
@@ -162,7 +168,7 @@ public class VentanaOficinaTecnica extends JFrame {
 					int row = tablaPedidos.getSelectedRow();
 					DefaultTableModel modelo = (DefaultTableModel)tablaPedidos.getModel();
 					Integer idPedido = (Integer) modelo.getValueAt(row, 0);
-					VentanaComentarios v = new VentanaComentarios(thisWindow, idPedido);
+					VentanaComentarios v = new VentanaComentarios(thisWindow, idPedido, thisWindow.getSector());
 					v.setVisible(true);
 				}
 			}

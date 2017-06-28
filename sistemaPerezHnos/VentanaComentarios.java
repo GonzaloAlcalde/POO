@@ -42,15 +42,16 @@ public class VentanaComentarios extends JFrame {
 		try{
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost/TP_Objetos", "root", "1234");
 	
-			String sql = "SELECT Comentario FROM pedidos, comentario WHERE Comentario.idPedido = " + Integer.toString(idPedido) + " AND Pedidos.idPedido = " + Integer.toString(idPedido) + ";";
+			String sql = "SELECT Comentario, Comentario.sector FROM pedidos, comentario WHERE Comentario.idPedido = " + Integer.toString(idPedido) + " AND Pedidos.idPedido = " + Integer.toString(idPedido) + ";";
 			PreparedStatement ps = con.prepareStatement(sql);
 			
 			ResultSet rs = ps.executeQuery();
 			
-			Object registro[] = new Object[1];
+			Object registro[] = new Object[2];
 			
 			while (rs.next()){
-				registro[0] = rs.getObject("Comentario");				
+				registro[0] = rs.getObject("Comentario");
+				registro[1] = rs.getObject("Comentario.sector");
 				modelo.addRow(registro);
 			}
 			
@@ -64,10 +65,11 @@ public class VentanaComentarios extends JFrame {
 		}
 	}
 
-	public VentanaComentarios(JFrame ventanaPadre, Integer idPedido) {
+	public VentanaComentarios(JFrame ventanaPadre, Integer idPedido, String sector) {
 		
 		home = ventanaPadre;
 		home.setVisible(false);
+		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -83,7 +85,7 @@ public class VentanaComentarios extends JFrame {
 		JButton btnAgregarComentario = new JButton("Agregar Comentario");
 		btnAgregarComentario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				VentanaAgregarComentario v = new VentanaAgregarComentario(idPedido, thisWindow);
+				VentanaAgregarComentario v = new VentanaAgregarComentario(idPedido, thisWindow, sector);
 				v.setVisible(true);
 				
 			}
@@ -108,6 +110,7 @@ public class VentanaComentarios extends JFrame {
 		    }
 		};
 		modelo.addColumn("Comentarios");
+		modelo.addColumn("Sector");
 		
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
