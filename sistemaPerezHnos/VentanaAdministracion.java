@@ -19,7 +19,7 @@ import javax.swing.JScrollPane;
 public class VentanaAdministracion extends JFrame {
 
 	private VentanaInicio home;
-	private VentanaAdministracion ventanaAdministracion= this;
+	private VentanaAdministracion thisWindow= this;
 	
 	private JPanel contentPane;
 	private JTable tablaPedidos;
@@ -117,7 +117,7 @@ public class VentanaAdministracion extends JFrame {
 		btnNuevoPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//SE CREA LA VENTANA PEDIDO
-				VentanaPedidoNuevo v= new VentanaPedidoNuevo(ventanaAdministracion);
+				VentanaPedidoNuevo v= new VentanaPedidoNuevo(thisWindow);
 				v.setModal(true);
 				v.setVisible(true);
 			}
@@ -138,6 +138,17 @@ public class VentanaAdministracion extends JFrame {
 		panel.setLayout(new BorderLayout(0, 0));
 		
 		JButton btnComentarios = new JButton("Comentarios");
+		btnComentarios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(tablaPedidos.getSelectedRow() != -1){
+					int row = tablaPedidos.getSelectedRow();
+					DefaultTableModel modelo = (DefaultTableModel)tablaPedidos.getModel();
+					Integer idPedido = (Integer) modelo.getValueAt(row, 0);
+					VentanaComentarios v = new VentanaComentarios(thisWindow, idPedido);
+					v.setVisible(true);
+				}
+			}
+		});
 		panel.add(btnComentarios, BorderLayout.NORTH);
 		
 		JScrollPane scrollPane = new JScrollPane();

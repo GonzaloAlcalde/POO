@@ -11,13 +11,16 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.DropMode;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaAgregarComentario extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField comentario;
 	
-	public VentanaAgregarComentario() {
+	public VentanaAgregarComentario(Integer idPedido, VentanaComentarios ventanaComentarios) {
+		setModal(true);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -35,12 +38,28 @@ public class VentanaAgregarComentario extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("OK");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if (!comentario.getText().isEmpty())
+						{
+							Comentarios.agregarComentario(idPedido, comentario.getText());
+							ventanaComentarios.vaciarTabla();
+							ventanaComentarios.actualizarComentarios(idPedido);
+							setVisible(false);
+						}
+					}
+				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						setVisible(false);
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}

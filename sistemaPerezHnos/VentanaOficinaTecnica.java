@@ -22,6 +22,8 @@ public class VentanaOficinaTecnica extends JFrame {
 
 	private VentanaInicio home;
 
+	private VentanaOficinaTecnica thisWindow = this;
+	
 	private JPanel contentPane;
 	private JPanel panel;
 	private JButton btnAsignarMaquina;
@@ -41,7 +43,7 @@ public class VentanaOficinaTecnica extends JFrame {
 		try{
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost/TP_Objetos", "root", "1234");
 	
-			String campos[] = {"idPedido", "idCliente", "fecha", "detalles", "sector"};
+			String campos[] = {"idPedido", "razon_social", "fecha", "detalles", "sector"};
 			String cadenaCampos = "";
 			String coma = ""; 
 			for (String c : campos){
@@ -49,7 +51,7 @@ public class VentanaOficinaTecnica extends JFrame {
 				coma = ",";
 			}
 			
-			String sql = "SELECT " + cadenaCampos + " FROM " + "pedidos WHERE sector = 'oficina_tecnica' ORDER BY fecha;";
+			String sql = "SELECT " + cadenaCampos + " FROM " + "pedidos, cliente WHERE pedidos.idCliente = cliente.idCliente AND sector = 'oficina_tecnica' ORDER BY fecha;";
 			PreparedStatement ps = con.prepareStatement(sql);
 			
 			ResultSet rs = ps.executeQuery();
@@ -59,7 +61,7 @@ public class VentanaOficinaTecnica extends JFrame {
 			while (rs.next()){
 				
 				registro[0] = rs.getObject("idPedido");
-				registro[1] = rs.getObject("idCliente");
+				registro[1] = rs.getObject("razon_social");
 				registro[2] = rs.getObject("detalles");
 				
 			    java.sql.Date dbSqlDate = rs.getDate("fecha");
@@ -107,7 +109,7 @@ public class VentanaOficinaTecnica extends JFrame {
 		    }
 		};
 		modelo.addColumn("idPedido");
-		modelo.addColumn("idCliente");
+		modelo.addColumn("Razon social");
 		modelo.addColumn("Detalles");
 		modelo.addColumn("Fecha");
 		
@@ -154,6 +156,17 @@ public class VentanaOficinaTecnica extends JFrame {
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
 		btnComentarios = new JButton("Comentarios");
+		btnComentarios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(tablaPedidos.getSelectedRow() != -1){
+					int row = tablaPedidos.getSelectedRow();
+					DefaultTableModel modelo = (DefaultTableModel)tablaPedidos.getModel();
+					Integer idPedido = (Integer) modelo.getValueAt(row, 0);
+					VentanaComentarios v = new VentanaComentarios(thisWindow, idPedido);
+					v.setVisible(true);
+				}
+			}
+		});
 		panel_1.add(btnComentarios, BorderLayout.NORTH);
 		
 		scrollPane = new JScrollPane();

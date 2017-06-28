@@ -18,35 +18,31 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JScrollPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaComentarios extends JFrame {
 
 	private JPanel contentPane;
-	private JTable tablaComentarios;
 	private JFrame home;
 	
-
+	private VentanaComentarios thisWindow= this;
+	
 	private DefaultTableModel modelo;
+	private JTable table;
 	
 	public void vaciarTabla()
 	{
 		modelo.setRowCount(0);
 	}
 	
-	public void actualizarPedidos()
+	public void actualizarComentarios(Integer idPedido)
 	{
 		try{
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost/TP_Objetos", "root", "1234");
 	
-			String campos[] = {"Pedidos.idPedido", "Comentarios.idPedido", "Comentario"};
-			String cadenaCampos = "";
-			String coma = ""; 
-			for (String c : campos){
-				cadenaCampos += coma + c;
-				coma = ",";
-			}
-			
-			String sql = "SELECT " + cadenaCampos + " FROM pedidos, comentarios WHERE " + campos[0] + " = " + campos[1] + ";";
+			String sql = "SELECT Comentario FROM pedidos, comentario WHERE Comentario.idPedido = " + Integer.toString(idPedido) + " AND Pedidos.idPedido = " + Integer.toString(idPedido) + ";";
 			PreparedStatement ps = con.prepareStatement(sql);
 			
 			ResultSet rs = ps.executeQuery();
@@ -68,9 +64,10 @@ public class VentanaComentarios extends JFrame {
 		}
 	}
 
-	public VentanaComentarios(JFrame ventanaPadre) {
+	public VentanaComentarios(JFrame ventanaPadre, Integer idPedido) {
 		
 		home = ventanaPadre;
+		home.setVisible(false);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -79,31 +76,18 @@ public class VentanaComentarios extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		tablaComentarios = new JTable();
-		tablaComentarios.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null},
-			},
-			new String[] {
-				"Comentarios"
-			}
-		) {
-			boolean[] columnEditables = new boolean[] {
-				false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
-		contentPane.add(tablaComentarios, BorderLayout.CENTER);
-		
-		this.actualizarPedidos();
-		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JButton btnAgregarComentario = new JButton("Agregar Comentario");
+		btnAgregarComentario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				VentanaAgregarComentario v = new VentanaAgregarComentario(idPedido, thisWindow);
+				v.setVisible(true);
+				
+			}
+		});
 		panel.add(btnAgregarComentario);
 		
 		JButton btnAtras = new JButton("Atras");
@@ -115,6 +99,24 @@ public class VentanaComentarios extends JFrame {
 			}
 		});
 		panel.add(btnAtras);
+		
+		modelo = new DefaultTableModel(){
+			 @Override
+		    public boolean isCellEditable(int row, int column) {
+		       //all cells false
+		       return false;
+		    }
+		};
+		modelo.addColumn("Comentarios");
+		
+		JScrollPane scrollPane = new JScrollPane();
+		contentPane.add(scrollPane, BorderLayout.CENTER);
+		
+		table = new JTable();
+		table.setModel(modelo);
+		scrollPane.setViewportView(table);
+		
+		this.actualizarComentarios(idPedido);
 	}
 
 }

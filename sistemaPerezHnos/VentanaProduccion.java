@@ -19,6 +19,8 @@ public class VentanaProduccion extends JFrame {
 
 	private VentanaInicio home;
 
+	private VentanaProduccion thisWindow= this;
+	
 	private JPanel contentPane;
 	private JPanel panel;
 	private JButton btnAsignarMaquina;
@@ -126,6 +128,17 @@ public class VentanaProduccion extends JFrame {
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
 		btnComentarios = new JButton("Comentarios");
+		btnComentarios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(table.getSelectedRow() != -1){
+					int row = table.getSelectedRow();
+					DefaultTableModel modelo = (DefaultTableModel)table.getModel();
+					Integer idPedido = (Integer) modelo.getValueAt(row, 0);
+					VentanaComentarios v = new VentanaComentarios(thisWindow, idPedido);
+					v.setVisible(true);
+				}
+			}
+		});
 		panel_1.add(btnComentarios, BorderLayout.NORTH);
 		
 		scrollPane = new JScrollPane();
