@@ -12,7 +12,5 @@ public class Cliente {
 		modelo = PruebaConexion.ejecutarConsulta(tabla, campos, busqueda);
 		
 		return modelo;
-		
-		//Comentario
 	}
 }

@@ -9,6 +9,24 @@ import javax.swing.JTextField;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 
 public class Pedido {
+	
+	public static boolean pedidoValido(JTextField textoRazonSocial, JDatePickerImpl datePicker)
+	{
+		boolean usuarioElegido = false;
+		boolean fechaFueElegida = false;
+		
+		if (!(textoRazonSocial.getText().isEmpty()))
+		{
+			usuarioElegido = true;
+		}
+		if (datePicker.getModel().getValue() != null)
+		{
+			fechaFueElegida = true;
+		}
+		
+		return (usuarioElegido && fechaFueElegida);	
+	}
+	
 	public static void crearPedido(int idCliente, JTextField textField_1, JDatePickerImpl datePicker){
 		try {
 			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/TP_Objetos", "root", "1234");

@@ -30,24 +30,7 @@ public class VentanaPedidoNuevo extends JDialog {
 	private JDatePickerImpl datePicker;
 	private int idCliente;
 
-	private boolean pedidoValido()
-	{
-		boolean usuarioElegido = false;
-		boolean fechaFueElegida = false;
-		
-		if (!(textoRazonSocial.getText().isEmpty()))
-		{
-			usuarioElegido = true;
-		}
-		if (datePicker.getModel().getValue() != null)
-		{
-			fechaFueElegida = true;
-		}
-		
-		return (usuarioElegido && fechaFueElegida);
-		
-		
-	}
+
 	
 	public VentanaPedidoNuevo(VentanaAdministracion ventanaAdministracion) {
 		setResizable(false);
@@ -127,7 +110,7 @@ public class VentanaPedidoNuevo extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(pedidoValido())
+						if(Pedido.pedidoValido(textoRazonSocial, datePicker))
 						{
 							Pedido.crearPedido(idCliente, textoDetalles, datePicker);
 							setVisible(false);
