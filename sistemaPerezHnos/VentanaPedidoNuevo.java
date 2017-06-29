@@ -16,7 +16,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
-import java.awt.GridLayout;
 import javax.swing.SwingConstants;
 
 //Libreria del calendario -- http://www.java2s.com/Code/Jar/j/Downloadjdatepicker132jar.htm
@@ -30,109 +29,107 @@ public class VentanaPedidoNuevo extends JDialog {
 	private JDatePickerImpl datePicker;
 	private int idCliente;
 
-
-	
 	public VentanaPedidoNuevo(VentanaAdministracion ventanaAdministracion) {
 		setResizable(false);
 		setTitle("Pedido nuevo");
-		setBounds(100, 100, 500, 150);
+		setBounds(100, 100, 360, 175);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(new GridLayout(0, 1, 0, 0));
+		contentPanel.setLayout(new BorderLayout(0, 0));
 		{
 			JPanel panel = new JPanel();
-			contentPanel.add(panel);
-			panel.setLayout(new GridLayout(0, 3, 0, 0));
+			contentPanel.add(panel, BorderLayout.CENTER);
+			panel.setLayout(new BorderLayout(0, 0));
 			{
-				JLabel lblCliente = new JLabel("                           Cliente");
+				JLabel lblCliente = new JLabel("Cliente");
 				lblCliente.setHorizontalAlignment(SwingConstants.CENTER);
-				panel.add(lblCliente);
+				panel.add(lblCliente, BorderLayout.NORTH);
 			}
-			{
-				textoRazonSocial = new JTextField();
-				textoRazonSocial.setEditable(false);
-				panel.add(textoRazonSocial);
-				textoRazonSocial.setColumns(10);
-			}
-			{
-				JButton btnBuscar = new JButton("Buscar");
-				btnBuscar.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						//Se crea la ventana buscar cliente
-						VentanaBuscarCliente v= new VentanaBuscarCliente();
-						v.setModal(true);
-						v.setVisible(true);
-						textoRazonSocial.setText(v.getRazon_Social());
-						idCliente = v.getIdCliente();
-					}
-				});
-				panel.add(btnBuscar);
-			}
-		}
-		{
-			JPanel panel = new JPanel();
-			contentPanel.add(panel);
-			panel.setLayout(new GridLayout(0, 2, 0, 0));
 			{
 				JLabel lblDetalles = new JLabel("Detalles");
+				panel.add(lblDetalles, BorderLayout.CENTER);
 				lblDetalles.setHorizontalAlignment(SwingConstants.CENTER);
-				panel.add(lblDetalles);
 			}
-			{
-				textoDetalles = new JTextField();
-				panel.add(textoDetalles);
-				textoDetalles.setColumns(10);
-			}
+			
+			JLabel lblFecha = new JLabel("Fecha");
+			panel.add(lblFecha, BorderLayout.SOUTH);
+			lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
 		}
 		{
 			JPanel panel = new JPanel();
-			contentPanel.add(panel);
-			
+			contentPanel.add(panel, BorderLayout.EAST);
+			panel.setLayout(new BorderLayout(0, 0));
+			{
+				textoDetalles = new JTextField();
+				panel.add(textoDetalles, BorderLayout.CENTER);
+				textoDetalles.setColumns(10);
+			}
 			SqlDateModel model = new SqlDateModel();
 			JDatePanelImpl datePanel = new JDatePanelImpl(model);
-			panel.setLayout(new GridLayout(0, 2, 0, 0));
-			
-			JLabel lblFecha = new JLabel("Fecha");
-			lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
-			panel.add(lblFecha);
 			datePicker = new JDatePickerImpl(datePanel);
+			panel.add(datePicker, BorderLayout.SOUTH);
+			{
+				JPanel panel_1 = new JPanel();
+				panel.add(panel_1, BorderLayout.NORTH);
+				panel_1.setLayout(new BorderLayout(0, 0));
+				{
+					textoRazonSocial = new JTextField();
+					panel_1.add(textoRazonSocial, BorderLayout.CENTER);
+					textoRazonSocial.setEditable(false);
+					textoRazonSocial.setColumns(10);
+				}
+				{
+					JButton btnBuscar = new JButton("Buscar");
+					panel_1.add(btnBuscar, BorderLayout.EAST);
+					btnBuscar.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							VentanaBuscarCliente v= new VentanaBuscarCliente();
+							v.setModal(true);
+							v.setVisible(true);
+							textoRazonSocial.setText(v.getRazon_Social());
+							idCliente = v.getIdCliente();
+						}
+					});
+				}
+			}
 			datePicker.getModel().setValue(null);
-			 
-			panel.add(datePicker);
-			
 		}
 		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			JPanel panel = new JPanel();
+			getContentPane().add(panel, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
-				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						if(Pedido.pedidoValido(textoRazonSocial, datePicker))
-						{
-							Pedido.crearPedido(idCliente, textoDetalles, datePicker);
-							setVisible(false);
-							ventanaAdministracion.vaciarTabla();
-							ventanaAdministracion.actualizarPedidos();
+				JPanel buttonPane = new JPanel();
+				panel.add(buttonPane);
+				buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+				{
+					JButton okButton = new JButton("OK");
+					okButton.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							if(Pedido.pedidoValido(textoRazonSocial, datePicker))
+							{
+								Pedido.crearPedido(idCliente, textoDetalles, datePicker);
+								setVisible(false);
+								Tabla.vaciarTabla(ventanaAdministracion.getModelo());
+								Tabla.actualizarPedidosAdministracion(ventanaAdministracion.getModelo());
+							}
 						}
-					}
-				});
-				
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						setVisible(false);
-					}
-				});
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
+					});
+					
+					okButton.setActionCommand("OK");
+					buttonPane.add(okButton);
+					getRootPane().setDefaultButton(okButton);
+				}
+				{
+					JButton cancelButton = new JButton("Cancel");
+					cancelButton.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							setVisible(false);
+						}
+					});
+					cancelButton.setActionCommand("Cancel");
+					buttonPane.add(cancelButton);
+				}
 			}
 		}
 		

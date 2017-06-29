@@ -9,7 +9,7 @@ public class Cliente {
 		String campos[] = {"idCliente", "razon_social", "cuit", "telefono", "direccion", "email"};
 		String busqueda = texto;
 		
-		modelo = PruebaConexion.ejecutarConsulta(tabla, campos, busqueda);
+		modelo = Tabla.ejecutarConsultaUsuario(tabla, campos, busqueda);
 		
 		return modelo;
 	}

@@ -107,7 +107,6 @@ public class VentanaBuscarCliente extends JDialog {
 	private void cerrarRetornarResultado(){
 		
 		int row = tabla.getSelectedRow();
-		//int column = tabla.getSelectedColumn();
 		
 		DefaultTableModel modelo = (DefaultTableModel)tabla.getModel();
 		this.razon_social = (String)modelo.getValueAt(row, 1);

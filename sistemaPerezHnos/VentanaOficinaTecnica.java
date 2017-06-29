@@ -8,11 +8,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import java.awt.event.MouseAdapter;
@@ -38,58 +33,7 @@ public class VentanaOficinaTecnica extends JFrame {
 	public String getSector(){
 		return sector;
 	}
-
-	public void vaciarTabla()
-	{
-		modelo.setRowCount(0);
-	}
 	
-	public void actualizarPedidos()
-	{
-		try{
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost/TP_Objetos", "root", "1234");
-	
-			String campos[] = {"idPedido", "razon_social", "fecha", "detalles", "sector"};
-			String cadenaCampos = "";
-			String coma = ""; 
-			for (String c : campos){
-				cadenaCampos += coma + c;
-				coma = ",";
-			}
-			
-			String sql = "SELECT " + cadenaCampos + " FROM " + "pedidos, cliente WHERE pedidos.idCliente = cliente.idCliente AND sector = 'oficina_tecnica' ORDER BY fecha;";
-			PreparedStatement ps = con.prepareStatement(sql);
-			
-			ResultSet rs = ps.executeQuery();
-			
-			Object registro[] = new Object[5];
-			
-			while (rs.next()){
-				
-				registro[0] = rs.getObject("idPedido");
-				registro[1] = rs.getObject("razon_social");
-				registro[2] = rs.getObject("detalles");
-				
-			    java.sql.Date dbSqlDate = rs.getDate("fecha");
-			    java.util.Date dbSqlDateConverted = new java.util.Date(dbSqlDate.getTime());
-			    registro[3] = dbSqlDateConverted;
-				
-				modelo.addRow(registro);
-			}
-			
-			rs.close();
-			ps.close();
-			con.close();
-		}
-		catch(SQLException e)
-		{
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 * Create the frame.
-	 */
 	public VentanaOficinaTecnica(VentanaInicio inicio) {
 		setTitle("P\u00E9rez Hnos. - Oficina T\u00E9cnica");
 		
@@ -125,7 +69,7 @@ public class VentanaOficinaTecnica extends JFrame {
 			e.printStackTrace();
 		}
 		
-		this.actualizarPedidos();
+		Tabla.actualizarPedidosOficinaTecnica(modelo);
 		
 		btnAsignarMaquina = new JButton("Asignar Maquina");
 		btnAsignarMaquina.addMouseListener(new MouseAdapter() {
@@ -140,8 +84,8 @@ public class VentanaOficinaTecnica extends JFrame {
 					VentanaAsignarMaquina v = new VentanaAsignarMaquina(idPedido);
 					v.setVisible(true);
 					
-					vaciarTabla();
-					actualizarPedidos();
+					Tabla.vaciarTabla(modelo);
+					Tabla.actualizarPedidosOficinaTecnica(modelo);
 				}
 			}
 		});

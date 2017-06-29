@@ -1,18 +1,14 @@
 package sistemaPerezHnos;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Dialog.ModalityType;
 
 public class VentanaAsignarMaquina extends JDialog {
 
@@ -20,14 +16,10 @@ public class VentanaAsignarMaquina extends JDialog {
 	private JPanel panel;
 	private JPanel panel_1;
 	private JTable tablaMaquina;
-	private JButton btnAsignar;
-	
+	private JButton btnAsignar;	
 	private Integer idPedido;
 	private JButton btnVolver;
 
-	/**
-	 * Create the frame.
-	 */
 	public VentanaAsignarMaquina(Integer idPedido) {
 		this.idPedido = idPedido;
 		

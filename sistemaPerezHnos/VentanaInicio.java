@@ -1,7 +1,5 @@
 package sistemaPerezHnos;
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -10,11 +8,8 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.GridLayout;
-import javax.swing.border.LineBorder;
-import java.awt.Canvas;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 
 public class VentanaInicio extends JFrame {
 
@@ -22,9 +17,6 @@ public class VentanaInicio extends JFrame {
 	
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -39,8 +31,6 @@ public class VentanaInicio extends JFrame {
 	}
 
 	public VentanaInicio() {
-		
-		
 		setTitle("P\u00E9rez Hnos. - Bienvenido");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
@@ -53,12 +43,6 @@ public class VentanaInicio extends JFrame {
 		lblPerezHermanos.setFont(new Font("Calibri", Font.BOLD, 40));
 		lblPerezHermanos.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblPerezHermanos);
-		
-//		JLabel lblDibujo = new JLabel("DIBUJO");
-//		contentPane.add(lblDibujo, BorderLayout.WEST);
-//		
-//		JLabel lblDibujo_1 = new JLabel("DIBUJO");
-//		contentPane.add(lblDibujo_1, BorderLayout.EAST);
 		
 		JPanel panelSeleccion = new JPanel();
 		contentPane.add(panelSeleccion);
@@ -107,13 +91,6 @@ public class VentanaInicio extends JFrame {
 			}
 		});
 		panelSeleccion.add(btnDespacho);
-		
-		//JPanel panelCentral = new JPanel();
-		//panelCentral.setBorder(new LineBorder(null, 0));
-		//contentPane.add(panelCentral, BorderLayout.CENTER);
-		
-		//Canvas canvas = new Canvas();
-		//panelCentral.add(canvas);
 	}
 
 }

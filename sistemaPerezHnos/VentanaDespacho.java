@@ -8,11 +8,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 
@@ -31,58 +26,7 @@ public class VentanaDespacho extends JFrame {
 	public String getSector(){
 		return sector;
 	}
-	
-	public void vaciarTabla()
-	{
-		modelo.setRowCount(0);
-	}
-	
-	public void actualizarPedidos()
-	{
-		try{
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost/TP_Objetos", "root", "1234");
-	
-			String campos[] = {"idPedido", "razon_social", "fecha", "detalles", "sector"};
-			String cadenaCampos = "";
-			String coma = ""; 
-			for (String c : campos){
-				cadenaCampos += coma + c;
-				coma = ",";
-			}
-			
-			String sql = "SELECT " + cadenaCampos + " FROM " + "pedidos, cliente WHERE pedidos.idCliente = cliente.idCliente AND sector = 'Despacho' AND despachado = false ORDER BY fecha;";
-			PreparedStatement ps = con.prepareStatement(sql);
-			
-			ResultSet rs = ps.executeQuery();
-			
-			Object registro[] = new Object[5];
-			
-			while (rs.next()){
-				
-				registro[0] = rs.getObject("idPedido");
-				registro[1] = rs.getObject("razon_social");
-				registro[2] = rs.getObject("detalles");
-				
-			    java.sql.Date dbSqlDate = rs.getDate("fecha");
-			    java.util.Date dbSqlDateConverted = new java.util.Date(dbSqlDate.getTime());
-			    registro[3] = dbSqlDateConverted;
-				
-				modelo.addRow(registro);
-			}
-			
-			rs.close();
-			ps.close();
-			con.close();
-		}
-		catch(SQLException e)
-		{
-			e.printStackTrace();
-		}
-	}
 
-	/**
-	 * Create the frame.
-	 */
 	public VentanaDespacho(VentanaInicio inicio) {
 		setTitle("P\u00E9rez Hnos. - Despacho");
 		
@@ -108,8 +52,8 @@ public class VentanaDespacho extends JFrame {
 					DefaultTableModel modelo = (DefaultTableModel)table.getModel();
 					Integer idPedido = (Integer) modelo.getValueAt(row, 0);
 					Pedido.despacharPedido(idPedido);
-					vaciarTabla();
-					actualizarPedidos();
+					Tabla.vaciarTabla(modelo);
+					Tabla.actualizarPedidosDespacho(modelo);
 				}
 			}
 		});
@@ -164,6 +108,6 @@ public class VentanaDespacho extends JFrame {
 		table.setModel(modelo);
 		scrollPane.setViewportView(table);
 		
-		this.actualizarPedidos();
+		Tabla.actualizarPedidosDespacho(modelo);
 	}
 }

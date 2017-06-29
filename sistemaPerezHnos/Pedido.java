@@ -1,6 +1,5 @@
 package sistemaPerezHnos;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -29,7 +28,7 @@ public class Pedido {
 	
 	public static void crearPedido(int idCliente, JTextField textField_1, JDatePickerImpl datePicker){
 		try {
-			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/TP_Objetos", "root", "1234");
+			Connection conexion= PruebaConexion.getConnection();
 			
 			String detalle = textField_1.getText();
 			
@@ -52,7 +51,7 @@ public class Pedido {
 	public static void cambiarSector(Integer idPedido, String sector)
 	{
 		try {
-			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/TP_Objetos", "root", "1234");
+			Connection conexion= PruebaConexion.getConnection();
 			
 			String idPedidoString = Integer.toString(idPedido);
 			
@@ -71,7 +70,7 @@ public class Pedido {
 	
 	public static void asignarMaquina(Integer idPedido, String maquina){
 		try {
-			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/TP_Objetos", "root", "1234");
+			Connection conexion= PruebaConexion.getConnection();
 
 			String idPedidoString = Integer.toString(idPedido);
 			
@@ -92,7 +91,7 @@ public class Pedido {
 	
 	public static void despacharPedido(Integer idPedido){
 		try {
-			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/TP_Objetos", "root", "1234");
+			Connection conexion= PruebaConexion.getConnection();
 			
 			String idPedidoString = Integer.toString(idPedido);
 

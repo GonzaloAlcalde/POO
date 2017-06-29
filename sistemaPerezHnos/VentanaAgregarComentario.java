@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.DropMode;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -43,8 +42,8 @@ public class VentanaAgregarComentario extends JDialog {
 						if (!comentario.getText().isEmpty())
 						{
 							Comentarios.agregarComentario(idPedido, comentario.getText(), sector);
-							ventanaComentarios.vaciarTabla();
-							ventanaComentarios.actualizarComentarios(idPedido);
+							Tabla.vaciarTabla(ventanaComentarios.getModelo());
+							Tabla.actualizarComentarios(idPedido, ventanaComentarios.getModelo());
 							setVisible(false);
 						}
 					}

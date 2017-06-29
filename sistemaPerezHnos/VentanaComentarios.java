@@ -1,8 +1,6 @@
 package sistemaPerezHnos;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -12,11 +10,6 @@ import javax.swing.JButton;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -31,39 +24,10 @@ public class VentanaComentarios extends JFrame {
 	private DefaultTableModel modelo;
 	private JTable table;
 	
-	public void vaciarTabla()
-	{
-		modelo.setRowCount(0);
-	}
+	public DefaultTableModel getModelo() {
+		return modelo;
+	}	
 	
-	public void actualizarComentarios(Integer idPedido)
-	{
-		try{
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost/TP_Objetos", "root", "1234");
-	
-			String sql = "SELECT Comentario, Comentario.sector FROM pedidos, comentario WHERE Comentario.idPedido = " + Integer.toString(idPedido) + " AND Pedidos.idPedido = " + Integer.toString(idPedido) + ";";
-			PreparedStatement ps = con.prepareStatement(sql);
-			
-			ResultSet rs = ps.executeQuery();
-			
-			Object registro[] = new Object[2];
-			
-			while (rs.next()){
-				registro[0] = rs.getObject("Comentario");
-				registro[1] = rs.getObject("Comentario.sector");
-				modelo.addRow(registro);
-			}
-			
-			rs.close();
-			ps.close();
-			con.close();
-		}
-		catch(SQLException e)
-		{
-			e.printStackTrace();
-		}
-	}
-
 	public VentanaComentarios(JFrame ventanaPadre, Integer idPedido, String sector) {
 		
 		home = ventanaPadre;
@@ -118,7 +82,6 @@ public class VentanaComentarios extends JFrame {
 		table.setModel(modelo);
 		scrollPane.setViewportView(table);
 		
-		this.actualizarComentarios(idPedido);
+		Tabla.actualizarComentarios(idPedido, modelo);
 	}
-
 }
